@@ -94,6 +94,20 @@ color:#dc2626;
 font-weight:bold;
 }
 
+.btn-eliminar{
+background-color:#ef4444;
+color:white;
+padding:6px 12px;
+text-decoration:none;
+border-radius:4px;
+font-size:13px;
+font-weight:bold;
+}
+
+.btn-eliminar:hover{
+background-color:#b91c1c;
+}
+
 </style>
 </head>
 
@@ -103,7 +117,10 @@ font-weight:bold;
 
 <div class="header">
 <h2>Catálogo de Inventario</h2>
-<a href="nuevo_producto.php" style="background: #3b82f6; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">+ Nuevo Producto</a>
+
+<a href="nuevo_producto.php" style="background: #3b82f6; color: white; padding: 10px;
+text-decoration: none; border-radius: 5px;">+ Nuevo Producto</a>
+
 <div>
 <span>Usuario:
 <strong><?php echo $_SESSION['nombre']; ?></strong>
@@ -124,6 +141,7 @@ Cerrar Sesión
 <th>Categoría</th>
 <th>Stock</th>
 <th>Precio Unitario</th>
+<th>Acciones</th>
 </tr>
 </thead>
 
@@ -140,6 +158,7 @@ $claseStock = ($fila['stock'] < 10) ? 'stock-bajo' : '';
 ?>
 
 <tr>
+
 <td><?php echo $fila['id']; ?></td>
 
 <td><?php echo $fila['nombre_producto']; ?></td>
@@ -153,6 +172,15 @@ $claseStock = ($fila['stock'] < 10) ? 'stock-bajo' : '';
 <td>
 $<?php echo number_format($fila['precio'], 2); ?>
 </td>
+
+<td>
+<a href="eliminar_producto.php?id=<?php echo $fila['id']; ?>"
+class="btn-eliminar"
+onclick="return confirm('¿Estás seguro de eliminar el producto: <?php echo $fila['nombre_producto']; ?>?');">
+🗑️ Eliminar
+</a>
+</td>
+
 </tr>
 
 <?php
@@ -164,7 +192,7 @@ $<?php echo number_format($fila['precio'], 2); ?>
 ?>
 
 <tr>
-<td colspan="5" style="text-align:center;">
+<td colspan="6" style="text-align:center;">
 No hay productos registrados en el sistema.
 </td>
 </tr>
