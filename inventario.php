@@ -173,11 +173,17 @@ $claseStock = ($fila['stock'] < 10) ? 'stock-bajo' : '';
 $<?php echo number_format($fila['precio'], 2); ?>
 </td>
 
+
 <td>
-<a href="eliminar_producto.php?id=<?php echo $fila['id']; ?>"
-class="btn-eliminar"
-onclick="return confirm('¿Estás seguro de eliminar el producto: <?php echo $fila['nombre_producto']; ?>?');">
-🗑️ Eliminar
+ <!-- NUEVO BOTÓN DE EDITAR -->
+ <a href="editar_producto.php?id=<?php echo $fila['id']; ?>" class="btn-editar">✏️
+Editar</a>
+
+ <!-- Botón de eliminar (ya lo tenías) -->
+ <a href="eliminar_producto.php?id=<?php echo $fila['id']; ?>" class="btn-eliminar"
+onclick="return confirm('¿Seguro?');">🗑️Eliminar</a>
+ </td>
+
 </a>
 </td>
 
