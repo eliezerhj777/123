@@ -25,105 +25,115 @@ $res_caro = $conn->query("SELECT MAX(precio) AS max_precio FROM productos");
 $fila_caro = $res_caro->fetch_assoc();
 $precio_maximo = $fila_caro['max_precio'] ? $fila_caro['max_precio'] : 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <title>Panel de Control - Sistema de Ventas</title>
 
 <style>
 
-body{
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-background:#f1f5f9;
-margin:0;
-padding:20px;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f1f5f9;
+    margin: 0;
+    padding: 20px;
 }
 
-.navbar{
-background:#1e293b;
-color:white;
-padding:15px 25px;
-border-radius:8px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
-box-shadow:0 4px 6px rgba(0,0,0,.1);
+.navbar {
+    background: #1e293b;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,.1);
 }
 
-.navbar h1{
-margin:0;
-font-size:22px;
+.navbar h1 {
+    margin: 0;
+    font-size: 22px;
 }
 
-.btn-salir{
-background:#ef4444;
-color:white;
-padding:8px 15px;
-text-decoration:none;
-border-radius:5px;
-font-weight:bold;
+.btn-salir {
+    background: #ef4444;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
 }
 
-.tarjetas-container{
-display:flex;
-gap:20px;
-justify-content:space-between;
-margin-bottom:30px;
+.tarjetas-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
-.tarjeta{
-background:white;
-flex:1;
-padding:25px;
-border-radius:8px;
-box-shadow:0 4px 6px rgba(0,0,0,.05);
-text-align:center;
-border-top:5px solid #3b82f6;
+.tarjeta {
+    background: white;
+    flex: 1;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,.05);
+    text-align: center;
+    border-top: 5px solid #3b82f6;
 }
 
-.tarjeta.verde{
-border-top-color:#10b981;
+.tarjeta.verde {
+    border-top-color: #10b981;
 }
 
-.tarjeta.naranja{
-border-top-color:#f59e0b;
+.tarjeta.naranja {
+    border-top-color: #f59e0b;
 }
 
-.tarjeta h3{
-color:#64748b;
-margin:0 0 10px;
-font-size:16px;
-text-transform:uppercase;
+.tarjeta h3 {
+    color: #64748b;
+    margin: 0 0 10px;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
-.numero{
-font-size:32px;
-font-weight:bold;
-color:#0f172a;
+.numero {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0f172a;
 }
 
-.menu-modulos{
-display:flex;
-gap:20px;
+.menu-modulos {
+    display: flex;
+    gap: 20px;
 }
 
-.modulo{
-background:#3b82f6;
-color:white;
-flex:1;
-padding:20px;
-text-align:center;
-text-decoration:none;
-border-radius:8px;
-font-size:18px;
-font-weight:bold;
-transition:.3s;
+.modulo {
+    background: #3b82f6;
+    color: white;
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: .3s;
 }
 
-.modulo:hover{
-background:#2563eb;
+.modulo:hover {
+    background: #2563eb;
+}
+
+.modulo-proveedores {
+    background: #10b981;
+}
+
+.modulo-proveedores:hover {
+    background: #059669;
 }
 
 </style>
@@ -151,34 +161,45 @@ Cerrar Sesión
 
 </div>
 
+
 <div class="tarjetas-container">
 
 <div class="tarjeta">
 <h3>Total de Productos</h3>
+
 <p class="numero">
 <?php echo $total_productos; ?> unds
 </p>
+
 </div>
+
 
 <div class="tarjeta verde">
 <h3>Capital Invertido</h3>
+
 <p class="numero">
 $<?php echo number_format($capital_inventario,2); ?>
 </p>
+
 </div>
+
 
 <div class="tarjeta naranja">
 <h3>Producto de Mayor Precio</h3>
+
 <p class="numero">
 $<?php echo number_format($precio_maximo,2); ?>
 </p>
+
 </div>
 
 </div>
+
 
 <h2 style="color:#334155;">
 Módulos del Sistema
 </h2>
+
 
 <div class="menu-modulos">
 
@@ -186,11 +207,18 @@ Módulos del Sistema
 📦 Ir al Catálogo de Inventario
 </a>
 
+
+<a href="proveedores.php" class="modulo modulo-proveedores">
+🚚 Módulo de Proveedores
+</a>
+
+
 <a href="#" class="modulo" style="background:#64748b;">
 🛒 Punto de Venta (Próximamente)
 </a>
 
 </div>
+
 
 </body>
 </html>
