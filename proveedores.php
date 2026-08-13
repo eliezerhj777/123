@@ -1,262 +1,177 @@
 <?php
-
 session_start();
 
-
-// Verificar que el usuario haya iniciado sesión
+// Verificar sesión
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
-
-// Conexión a la base de datos
+// Conexión
 require_once 'conexion.php';
 
-
-// Consulta de proveedores
-$sql = "SELECT 
-            id,
-            nombre_empresa,
-            contacto,
-            telefono,
-            direccion
+// Obtener proveedores
+$sql = "SELECT nombre_empresa, contacto, telefono, direccion
         FROM proveedores
-        ORDER BY id ASC";
+        ORDER BY nombre_empresa ASC";
 
-
-// Ejecutar consulta
 $resultado = $conn->query($sql);
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores - Sistema de Ventas</title>
 
-<meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
 
-<title>Proveedores - Sistema de Ventas</title>
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
+        h2 {
+            color: #0f172a;
+            margin: 0;
+        }
 
-<style>
+        .btn-nuevo {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
 
-body{
-    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-    background-color:#f8fafc;
-    padding:20px;
-}
+        .btn-nuevo:hover {
+            background: #2563eb;
+        }
 
+        .btn-volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-.container{
-    max-width:1000px;
-    margin:0 auto;
-    background:white;
-    padding:20px;
-    border-radius:8px;
-    box-shadow:0 4px 6px rgba(0,0,0,0.05);
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #cbd5e1;
+        }
 
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:2px solid #e2e8f0;
-    padding-bottom:10px;
-    margin-bottom:20px;
-}
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #475569;
+        }
 
+        tr:hover {
+            background-color: #f8fafc;
+        }
 
-h2{
-    color:#0f172a;
-    margin:0;
-}
-
-
-.btn-volver{
-    background-color:#64748b;
-    color:white;
-    padding:8px 15px;
-    text-decoration:none;
-    border-radius:4px;
-    font-weight:bold;
-}
-
-
-.btn-volver:hover{
-    background-color:#475569;
-}
-
-
-.btn-nuevo{
-    background-color:#3b82f6;
-    color:white;
-    padding:10px 15px;
-    text-decoration:none;
-    border-radius:5px;
-    font-weight:bold;
-}
-
-
-.btn-nuevo:hover{
-    background-color:#2563eb;
-}
-
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:15px;
-}
-
-
-th, td{
-    padding:12px;
-    text-align:left;
-    border-bottom:1px solid #e2e8f0;
-}
-
-
-th{
-    background-color:#f1f5f9;
-    color:#334155;
-}
-
-
-tr:hover{
-    background-color:#f8fafc;
-}
-
-</style>
-
+        .sin-datos {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+    </style>
 </head>
-
 
 <body>
 
-
 <div class="container">
 
+    <a href="dashboard.php" class="btn-volver">
+        ← Volver al Dashboard
+    </a>
 
-<div class="header">
+    <div class="encabezado">
+        <h2>Catálogo de Proveedores</h2>
 
-<h2>Catálogo de Proveedores</h2>
+        <a href="nuevo_proveedor.php" class="btn-nuevo">
+            + Nuevo Proveedor
+        </a>
+    </div>
 
+    <table>
+        <thead>
+            <tr>
+                <th>Empresa</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+            </tr>
+        </thead>
 
-<a href="dashboard.php" class="btn-volver">
-← Volver al Dashboard
-</a>
+        <tbody>
 
-</div>
+        <?php if ($resultado && $resultado->num_rows > 0): ?>
 
+            <?php while ($proveedor = $resultado->fetch_assoc()): ?>
 
-<a href="#" class="btn-nuevo">
-+ Nuevo Proveedor
-</a>
+                <tr>
+                    <td>
+                        <?php echo htmlspecialchars($proveedor['nombre_empresa']); ?>
+                    </td>
 
-<table>
+                    <td>
+                        <?php echo htmlspecialchars($proveedor['contacto']); ?>
+                    </td>
 
-<thead>
+                    <td>
+                        <?php echo htmlspecialchars($proveedor['telefono']); ?>
+                    </td>
 
-<tr>
+                    <td>
+                        <?php echo htmlspecialchars($proveedor['direccion']); ?>
+                    </td>
+                </tr>
 
-<th>ID</th>
+            <?php endwhile; ?>
 
-<th>Empresa</th>
+        <?php else: ?>
 
-<th>Contacto</th>
+            <tr>
+                <td colspan="4" class="sin-datos">
+                    No hay proveedores registrados.
+                </td>
+            </tr>
 
-<th>Teléfono</th>
+        <?php endif; ?>
 
-<th>Dirección</th>
-
-</tr>
-
-</thead>
-
-
-<tbody>
-
-<?php
-
-if ($resultado->num_rows > 0) {
-
-    while ($fila = $resultado->fetch_assoc()) {
-
-?>
-
-<tr>
-
-<td>
-<?php echo $fila['id']; ?>
-</td>
-
-
-<td>
-<?php echo $fila['nombre_empresa']; ?>
-</td>
-
-
-<td>
-<?php echo $fila['contacto']; ?>
-</td>
-
-
-<td>
-<?php echo $fila['telefono']; ?>
-</td>
-
-
-<td>
-<?php echo $fila['direccion']; ?>
-</td>
-
-</tr>
-
-<?php
-
-    }
-
-} else {
-
-?>
-
-<tr>
-
-<td colspan="5" style="text-align:center;">
-
-No hay proveedores registrados.
-
-</td>
-
-</tr>
-
-<?php
-
-}
-
-?>
-
-</tbody>
-
-</table>
-
+        </tbody>
+    </table>
 
 </div>
-
-
-<?php
-
-$resultado->free();
-
-?>
-
 
 </body>
-
 </html>
