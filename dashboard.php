@@ -30,7 +30,9 @@ $precio_maximo = $fila_caro['max_precio'] ? $fila_caro['max_precio'] : 0;
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
+
 <title>Panel de Control - Sistema de Ventas</title>
 
 <style>
@@ -109,12 +111,14 @@ body {
 .menu-modulos {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .modulo {
     background: #3b82f6;
     color: white;
     flex: 1;
+    min-width: 200px;
     padding: 20px;
     text-align: center;
     text-decoration: none;
@@ -136,6 +140,14 @@ body {
     background: #059669;
 }
 
+.modulo-compras {
+    background: #10b981;
+}
+
+.modulo-compras:hover {
+    background: #059669;
+}
+
 </style>
 
 </head>
@@ -144,81 +156,93 @@ body {
 
 <div class="navbar">
 
-<h1>
-Bienvenido,
-<?php echo $_SESSION['nombre']; ?>
+    <h1>
 
-<span style="font-size:14px;color:#94a3b8;">
-(Rol:
-<?php echo $_SESSION['rol']; ?>)
-</span>
+        Bienvenido,
+        <?php echo $_SESSION['nombre']; ?>
 
-</h1>
+        <span style="font-size:14px;color:#94a3b8;">
 
-<a href="logout.php" class="btn-salir">
-Cerrar Sesión
-</a>
+            (Rol:
+            <?php echo $_SESSION['rol']; ?>)
+
+        </span>
+
+    </h1>
+
+    <a href="logout.php" class="btn-salir">
+        Cerrar Sesión
+    </a>
 
 </div>
 
 
 <div class="tarjetas-container">
 
-<div class="tarjeta">
-<h3>Total de Productos</h3>
+    <div class="tarjeta">
 
-<p class="numero">
-<?php echo $total_productos; ?> unds
-</p>
+        <h3>Total de Productos</h3>
 
-</div>
+        <p class="numero">
+            <?php echo $total_productos; ?> unds
+        </p>
 
-
-<div class="tarjeta verde">
-<h3>Capital Invertido</h3>
-
-<p class="numero">
-$<?php echo number_format($capital_inventario,2); ?>
-</p>
-
-</div>
+    </div>
 
 
-<div class="tarjeta naranja">
-<h3>Producto de Mayor Precio</h3>
+    <div class="tarjeta verde">
 
-<p class="numero">
-$<?php echo number_format($precio_maximo,2); ?>
-</p>
+        <h3>Capital Invertido</h3>
 
-</div>
+        <p class="numero">
+            $<?php echo number_format($capital_inventario, 2); ?>
+        </p>
+
+    </div>
+
+
+    <div class="tarjeta naranja">
+
+        <h3>Producto de Mayor Precio</h3>
+
+        <p class="numero">
+            $<?php echo number_format($precio_maximo, 2); ?>
+        </p>
+
+    </div>
 
 </div>
 
 
 <h2 style="color:#334155;">
-Módulos del Sistema
+    Módulos del Sistema
 </h2>
 
 
 <div class="menu-modulos">
 
-<a href="inventario.php" class="modulo">
-📦 Ir al Catálogo de Inventario
-</a>
+    <a href="inventario.php" class="modulo">
+        📦 Ir al Catálogo de Inventario
+    </a>
 
 
-<a href="proveedores.php" class="modulo modulo-proveedores">
-🚚 Módulo de Proveedores
-</a>
+    <a href="proveedores.php" class="modulo modulo-proveedores">
+        🚚 Módulo de Proveedores
+    </a>
 
 
-<a href="#" class="modulo" style="background:#64748b;">
-🛒 Punto de Venta (Próximamente)
-</a>
+    <a href="nueva_compra.php" class="modulo modulo-compras">
+        📥 Registrar Ingreso de Mercadería
+    </a>
+
+
+    <a href="#" class="modulo" style="background:#64748b;">
+        🛒 Punto de Venta (Próximamente)
+    </a>
 
 </div>
 
 
 </body>
+
 </html>
