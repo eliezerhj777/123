@@ -1,3 +1,4 @@
+```php
 <?php
 
 session_start();
@@ -78,6 +79,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt2->close();
 
 
+        // ==========================================
+        // FASE 3: ACTUALIZAR EL INVENTARIO FÍSICO
+        // ==========================================
+
+        // MySQL suma la cantidad comprada al stock actual
+        $sql_stock = "UPDATE productos SET stock = stock + ? WHERE id = ?";
+
+        $stmt3 = $conn->prepare($sql_stock);
+
+        // Cantidad comprada y producto
+        $stmt3->bind_param(
+            "ii",
+            $cantidad,
+            $producto_id
+        );
+
+        $stmt3->execute();
+
+        $stmt3->close();
+
+
         // Redirigir al dashboard
 
         header("Location: dashboard.php");
@@ -101,3 +123,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
+```
