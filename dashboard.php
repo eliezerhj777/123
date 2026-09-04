@@ -240,6 +240,10 @@ body {
         🛒 Punto de Venta (Próximamente)
     </a>
 
+    <a href="historial_compras.php" class="modulo">Historial de Compras
+        
+    </a>
+
 </div>
 
 
